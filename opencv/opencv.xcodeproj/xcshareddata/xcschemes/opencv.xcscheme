@@ -36,7 +36,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/kawaii_jieun/Documents/cv/opencv/opencv"
+      customWorkingDirectory = "/Users/kawaii_jieun/Documents/GitHub/OpencvStudy/images"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
