@@ -5,19 +5,34 @@
 //  Created by kawaii on 2021/04/07.
 //
 
-#include <opencv2/opencv.hpp>
+#include "opencv2/opencv.hpp"
 using namespace cv;
 
+Mat src, src_gray;
+Mat dst, detected_edges;
+int edgeThresh = 1;
+int lowThreshold;
+int const max_lowThreshold = 100;
+int ratio = 3;
+int kernel_size = 3;
+
+static void CannyThreshold(int, void*)
+{
+    blur(src, detected_edges, Size(3, 3));
+    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size);
+    dst = Scalar::all(0);
+    src.copyTo(dst, detected_edges);
+    imshow("Image", src);
+    imshow("Canny", dst);
+}
 int main()
 {
-    Mat src = imread("Lenna.jpg", 1);
-    Mat dst;
-    imshow("src", src);
-
-    for (int i = 1; i<61; i = i + 2)
-    {
-        GaussianBlur(src, dst, Size(i, i), 0, 0);
-        imshow("Gaussian filter", dst);
-        waitKey(1000);
-    }
+    src = imread("Lenna.jpg", IMREAD_GRAYSCALE);
+    if (src.empty()) { return -1; }
+    dst.create(src.size(), src.type());
+    namedWindow("Canny");
+    createTrackbar("Min Threshold:", "Canny", &lowThreshold, max_lowThreshold, CannyThreshold);
+    CannyThreshold(0, 0);
+    waitKey(0);
+    return 0;
 }
